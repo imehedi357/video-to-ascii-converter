@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video to ASCII Art Converter</title>
-  <style>
-    * {
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video to ASCII Art Converter</title>
+    <style>
+      * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -27,7 +26,6 @@
       border-radius: 20px;
       padding: 30px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      max-width: 1280px;
       width: 100%;
       backdrop-filter: blur(10px);
     }
@@ -152,7 +150,7 @@
       background: #000;
       border-radius: 10px;
       padding: 10px;
-      min-height: 600px;
+      min-height: 1000px;
 
       display: flex;
       align-items: center;
@@ -302,93 +300,83 @@
         font-size: 1.8em;
       }
     }
-  </style>
-</head>
-
-<body>
-  <div class="container">
-    <h1>🎬 Video to ASCII Art Converter</h1>
-
-    <div class="upload-section">
-      <div class="file-input-wrapper">
-        <input type="file" id="videoInput" accept="video/*">
-        <label for="videoInput" class="file-input-label">Choose Video File</label>
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎬 Video to ASCII Art Converter</h1>
+      <div class="upload-section">
+        <div class="file-input-wrapper">
+          <input type="file" id="videoInput" accept="video/*">
+          <label for="videoInput" class="file-input-label">Choose Video File</label>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="control-group">
+          <label for="resolution">Resolution</label>
+          <input type="range" id="resolution" min="50" max="1800" value="100">
+          <span id="resolutionValue">100</span>
+        </div>
+        <div class="control-group">
+          <label for="contrast">Contrast</label>
+          <input type="range" id="contrast" min="0.5" max="2" step="0.1" value="1">
+          <span id="contrastValue">1.0</span>
+        </div>
+        <div class="control-group">
+          <label for="brightness">Brightness</label>
+          <input type="range" id="brightness" min="-50" max="50" value="0">
+          <span id="brightnessValue">0</span>
+        </div>
+        <div class="control-group">
+          <label for="charset">Character Set</label>
+          <select id="charset">
+            <option value="standard">Standard</option>
+            <option value="detailed">Detailed</option>
+            <option value="blocks">Blocks</option>
+            <option value="simple">Simple</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="colorMode">Color Mode</label>
+          <select id="colorMode">
+            <option value="green">Matrix Green</option>
+            <option value="white">White</option>
+            <option value="color">Full Color</option>
+          </select>
+        </div>
+        <button id="playPauseBtn" class="hidden">Play/Pause</button>
+        <button id="recordBtn" class="hidden">Start Recording</button>
+        <button id="stopRecordBtn" class="hidden">Stop Recording</button>
+        <button id="fullscreenBtn" class="hidden">Fullscreen ASCII</button>
+      </div>
+      <div class="output-section">
+        <div class="ascii-container">
+          <h3>ASCII Output</h3>
+          <pre id="asciiOutput"></pre>
+        </div>
+        <div class="video-container">
+          <h3>Original Video</h3>
+          <video id="videoPlayer" controls class="hidden"></video>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat">FPS:
+          <span id="fps">0</span></div>
+        <div class="stat">Frame:
+          <span id="frameCount">0</span></div>
+        <div class="stat">Size:
+          <span id="dimensions">0x0</span></div>
       </div>
     </div>
-
-    <div class="controls">
-      <div class="control-group">
-        <label for="resolution">Resolution</label>
-        <input type="range" id="resolution" min="50" max="800" value="100">
-        <span id="resolutionValue">100</span>
-      </div>
-
-      <div class="control-group">
-        <label for="contrast">Contrast</label>
-        <input type="range" id="contrast" min="0.5" max="2" step="0.1" value="1">
-        <span id="contrastValue">1.0</span>
-      </div>
-
-      <div class="control-group">
-        <label for="brightness">Brightness</label>
-        <input type="range" id="brightness" min="-50" max="50" value="0">
-        <span id="brightnessValue">0</span>
-      </div>
-
-      <div class="control-group">
-        <label for="charset">Character Set</label>
-        <select id="charset">
-          <option value="standard">Standard</option>
-          <option value="detailed">Detailed</option>
-          <option value="blocks">Blocks</option>
-          <option value="simple">Simple</option>
-        </select>
-      </div>
-
-      <div class="control-group">
-        <label for="colorMode">Color Mode</label>
-        <select id="colorMode">
-          <option value="green">Matrix Green</option>
-          <option value="white">White</option>
-          <option value="color">Full Color</option>
-        </select>
-      </div>
-
-      <button id="playPauseBtn" class="hidden">Play/Pause</button>
-      <button id="recordBtn" class="hidden">Start Recording</button>
-      <button id="stopRecordBtn" class="hidden">Stop Recording</button>
-      <button id="fullscreenBtn" class="hidden">Fullscreen ASCII</button>
-    </div>
-
-    <div class="output-section">
-      <div class="video-container">
-        <h3>Original Video</h3>
-        <video id="videoPlayer" controls class="hidden"></video>
-      </div>
-
-      <div class="ascii-container">
-        <h3>ASCII Output</h3>
-        <pre id="asciiOutput"></pre>
-      </div>
-    </div>
-
-    <div class="stats">
-      <div class="stat">FPS: <span id="fps">0</span></div>
-      <div class="stat">Frame: <span id="frameCount">0</span></div>
-      <div class="stat">Size: <span id="dimensions">0x0</span></div>
-    </div>
-  </div>
-
-  <canvas id="canvas" style="display: none;"></canvas>
-  <canvas id="recordCanvas" style="display: none;"></canvas>
-  <div class="fullscreen-overlay" id="fullscreenOverlay"></div>
-
-  <script>
-    const charSets = {
-      standard: ' .:-=+*#%@',
-      detailed: ' .\'`^",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$',
-      blocks: ' ░▒▓█',
-      simple: ' .oO@'
+    <canvas id="canvas" style="display: none;"></canvas>
+    <canvas id="recordCanvas" style="display: none;"></canvas>
+    <div class="fullscreen-overlay" id="fullscreenOverlay"></div>
+    <script>
+      const charSets = {
+      standard: '   .:-=+*#%@',
+      detailed: '   .\'`^",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$',
+      blocks: '  ░▒▓█',
+      simple: '  .oO@'
     };
 
     let video, canvas, ctx, asciiOutput;
@@ -443,7 +431,7 @@
       });
 
       video.addEventListener('pause', () => {
-        isProcessing = false;
+        processFrame();
       });
 
       video.addEventListener('ended', () => {
@@ -470,7 +458,7 @@
     }
 
     function processFrame() {
-      if (!isProcessing || video.paused || video.ended) return;
+      if (!isProcessing ||  video.ended) return;
 
       const resolution = parseInt(document.getElementById('resolution').value);
       const contrast = parseFloat(document.getElementById('contrast').value);
@@ -479,7 +467,7 @@
       const colorMode = document.getElementById('colorMode').value;
 
       // Set canvas size based on resolution with performance optimization
-      const width = Math.min(resolution, 800); // Cap width for performance
+      const width = resolution; // Cap width for performance
       const height = Math.floor((video.videoHeight / video.videoWidth) * width * 0.8);
 
       canvas.width = width;
@@ -493,8 +481,8 @@
       // Calculate font size based on available space and ASCII dimensions
       const fontWidth = containerWidth / width;
       const fontHeight = containerHeight / height;
-      const fontSize = Math.max(2, Math.min(fontWidth, fontHeight));
-      
+      const fontSize = Math.min(fontWidth, fontHeight);
+     console.log(fontSize); 
       asciiOutput.style.fontSize = fontSize + 'px';
       asciiOutput.style.lineHeight = fontSize + 'px';
 
@@ -559,11 +547,7 @@
       document.getElementById('frameCount').textContent = Math.floor(video.currentTime * 30);
 
       // Process next frame with throttling for better performance
-      setTimeout(() => {
-        if (isProcessing) {
           requestAnimationFrame(processFrame);
-        }
-      }, 1000 / 30); // Limit to ~30 FPS
     }
 
     function startRecording() {
@@ -721,12 +705,15 @@
            const containerHeight = container.clientHeight - 40;
            
            const resolution = parseInt(document.getElementById('resolution').value);
-           const width = Math.min(resolution, 800);
+           const width = resolution;
            const height = Math.floor((video.videoHeight / video.videoWidth) * width * 0.8);
            
            const fontWidth = containerWidth / width;
            const fontHeight = containerHeight / height;
-           const fontSize = Math.max(2, Math.min(fontWidth, fontHeight));
+           const fontSize = Math.min(fontWidth, fontHeight);
+
+          console.log(fontWidth);
+          console.log(fontSize);
            
            asciiOutput.style.fontSize = fontSize + 'px';
            asciiOutput.style.lineHeight = fontSize + 'px';
@@ -748,7 +735,6 @@
         }
       }
     });
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
